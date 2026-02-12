@@ -5,8 +5,12 @@ namespace Product.Services.Interfaces;
 
 public interface IProductService
 {
-    Task<IEnumerable<ProductEntity>> GetAllProducts();
-    Task<ProductEntity?> GetProductById(int id);
-    Task CreateProduct(ProductDto dto);
-    Task<bool> DeleteProduct(int id);
+    // Existing Read Methods
+    Task<IEnumerable<ProductEntity>> GetAllProductsAsync();
+    Task<ProductEntity?> GetProductByIdAsync(int id);
+
+    // --- NEW ADMIN METHODS ---
+    Task<ProductEntity> CreateProductAsync(CreateProductDto dto);
+    Task<ProductEntity?> UpdateProductAsync(int id, UpdateProductDto dto);
+    Task<bool> DeleteProductAsync(int id);
 }

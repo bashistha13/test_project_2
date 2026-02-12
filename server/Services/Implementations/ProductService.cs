@@ -14,21 +14,22 @@ public class ProductService : IProductService
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<IEnumerable<ProductEntity>> GetAllProducts()
+    public async Task<IEnumerable<ProductEntity>> GetAllProductsAsync()
     {
         return await _unitOfWork.Products.GetAllAsync();
     }
 
-    public async Task<ProductEntity?> GetProductById(int id)
+    public async Task<ProductEntity?> GetProductByIdAsync(int id)
     {
         return await _unitOfWork.Products.GetByIdAsync(id);
     }
 
-    public async Task CreateProduct(ProductDto dto)
+    // --- CREATE (Admin) ---
+    public async Task<ProductEntity> CreateProductAsync(CreateProductDto dto)
     {
         var product = new ProductEntity
         {
-            ProductName = dto.ProductName,   // REQUIRED
+            ProductName = dto.ProductName,
             Description = dto.Description,
             Price = dto.Price,
             Quantity = dto.Quantity,
@@ -37,18 +38,40 @@ public class ProductService : IProductService
 
         await _unitOfWork.Products.AddAsync(product);
         await _unitOfWork.CompleteAsync();
+        
+        return product;
     }
 
-    public async Task<bool> DeleteProduct(int id)
+    // --- UPDATE (Admin) ---
+    public async Task<ProductEntity?> UpdateProductAsync(int id, UpdateProductDto dto)
+    {
+        var existingProduct = await _unitOfWork.Products.GetByIdAsync(id);
+        
+        if (existingProduct == null) return null;
+
+        // Map the new values to the existing entity
+        existingProduct.ProductName = dto.ProductName;
+        existingProduct.Description = dto.Description;
+        existingProduct.Price = dto.Price;
+        existingProduct.Quantity = dto.Quantity;
+        existingProduct.CategoryId = dto.CategoryId;
+
+        _unitOfWork.Products.Update(existingProduct);
+        await _unitOfWork.CompleteAsync();
+
+        return existingProduct;
+    }
+
+    // --- DELETE (Admin) ---
+    public async Task<bool> DeleteProductAsync(int id)
     {
         var product = await _unitOfWork.Products.GetByIdAsync(id);
-        if (product == null)
-        {
-            return false;
-        }
+        
+        if (product == null) return false;
 
-        await _unitOfWork.Products.DeleteAsync(id);
+        _unitOfWork.Products.Delete(product);
         await _unitOfWork.CompleteAsync();
+        
         return true;
     }
 }

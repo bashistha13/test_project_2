@@ -1,13 +1,15 @@
 export interface Product {
   productId: number;
   productName: string;
-  description: string;
+  description?: string;
   price: number;
   quantity: number;
+  categoryId: number;    // Ensure this exists
+  categoryName?: string; // Optional for display
+}
+
+// --- NEW INTERFACE ---
+export interface Category {
   categoryId: number;
-  // If your API returns the category name nested:
-  category?: {
-    categoryId: number;
-    categoryName: string;
-  };
+  categoryName: string;
 }
