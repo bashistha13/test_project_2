@@ -148,7 +148,9 @@
 /Users/bashisthapandey/Desktop/product/server/bin/Debug/net9.0/product.pdb
 /Users/bashisthapandey/Desktop/product/server/bin/Debug/net9.0/Azure.Core.dll
 /Users/bashisthapandey/Desktop/product/server/bin/Debug/net9.0/Azure.Identity.dll
+/Users/bashisthapandey/Desktop/product/server/bin/Debug/net9.0/BCrypt.Net-Next.dll
 /Users/bashisthapandey/Desktop/product/server/bin/Debug/net9.0/Humanizer.dll
+/Users/bashisthapandey/Desktop/product/server/bin/Debug/net9.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
 /Users/bashisthapandey/Desktop/product/server/bin/Debug/net9.0/Microsoft.Bcl.AsyncInterfaces.dll
 /Users/bashisthapandey/Desktop/product/server/bin/Debug/net9.0/Microsoft.CodeAnalysis.dll
 /Users/bashisthapandey/Desktop/product/server/bin/Debug/net9.0/Microsoft.CodeAnalysis.CSharp.dll

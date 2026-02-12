@@ -7,34 +7,44 @@ public class AppDbContext : DbContext
 {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
+    // --- The 3 Tables ---
     public DbSet<ProductEntity> Products { get; set; }
     public DbSet<CategoryEntity> Categories { get; set; }
+    public DbSet<UserEntity> Users { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
 
-        // --- Category Mapping ---
+        // --- 1. Category Configuration ---
         modelBuilder.Entity<CategoryEntity>(entity =>
         {
             entity.HasKey(e => e.CategoryId);
             entity.Property(e => e.CategoryName).IsRequired().HasMaxLength(100);
         });
 
-        // --- Product Mapping ---
+        // --- 2. Product Configuration ---
         modelBuilder.Entity<ProductEntity>(entity =>
         {
-            entity.HasKey(e => e.ProductId); // Explicitly use ProductId as Key
+            entity.HasKey(e => e.ProductId);
             
-            // Map properties to exact DB column names
             entity.Property(e => e.ProductName).IsRequired().HasMaxLength(100);
-            entity.Property(e => e.Quantity).IsRequired(); // Matches 'Quantity' column
+            entity.Property(e => e.Quantity).IsRequired();
+            entity.Property(e => e.Price).HasColumnType("decimal(18,2)");
 
-            // Relationship
+            // Relationship: Product -> Category
             entity.HasOne(p => p.Category)
                   .WithMany(c => c.Products)
                   .HasForeignKey(p => p.CategoryId)
                   .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        // --- 3. User Configuration ---
+        modelBuilder.Entity<UserEntity>(entity =>
+        {
+            entity.HasKey(u => u.UserId);
+            entity.HasIndex(u => u.Email).IsUnique();
+            entity.HasIndex(u => u.Username).IsUnique();
         });
     }
 }
