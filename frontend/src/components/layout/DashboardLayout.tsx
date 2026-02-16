@@ -1,16 +1,13 @@
 import { useState, useRef, useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
-import { Menu, X, LogOut, User, Search, Plus, Filter, Download, Upload, Loader2 } from 'lucide-react';
+import { Menu, X, LogOut, User, Search, Plus, Filter, Download, Upload, Loader2, Mail } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useDashboard } from '../../context/DashboardContext';
 import { getCategories } from '../../features/products/api/getProducts';
 import type { Category } from '../../features/products/types';
 import axios from 'axios';
 
-// =======================================================
-// ⚠️ IMPORTANT: REPLACE "5024" WITH YOUR ACTUAL PORT!
-// Check your terminal where 'dotnet run' is running.
-// =======================================================
+// ✅ FIXED: Updated to match your Swagger Port (5175)
 const API_BASE_URL = "http://localhost:5175"; 
 
 export const DashboardLayout = () => {
@@ -44,9 +41,7 @@ export const DashboardLayout = () => {
     setTriggerAddModal(true); 
   };
 
-  // --- DOWNLOAD TEMPLATE ---
   const handleDownloadTemplate = () => {
-    // Uses the configured Base URL
     window.location.href = `${API_BASE_URL}/api/products/template`;
   };
 
@@ -54,7 +49,6 @@ export const DashboardLayout = () => {
     fileInputRef.current?.click();
   };
 
-  // --- UPLOAD FILE ---
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
@@ -94,7 +88,9 @@ export const DashboardLayout = () => {
           >
             {isSidebarOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
-          <h1 className="text-xl font-bold text-blue-600 tracking-tight">SmartBiz</h1>
+          <h1 className="text-xl font-bold text-blue-600 tracking-tight" onClick={() => navigate('/')} style={{cursor: 'pointer'}}>
+            SmartBiz
+          </h1>
         </div>
 
         <div className="flex items-center gap-4">
@@ -132,6 +128,13 @@ export const DashboardLayout = () => {
                   className="w-full flex items-center justify-center gap-2 bg-blue-600 text-white px-4 py-3 rounded-xl hover:bg-blue-700 transition-all shadow-md font-medium"
                 >
                   <Plus size={20} /> Add New Product
+                </button>
+
+                <button 
+                  onClick={() => navigate('/email')}
+                  className="w-full flex items-center justify-center gap-2 bg-white border border-gray-200 text-gray-700 px-4 py-2.5 rounded-xl hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200 transition-all font-medium text-sm"
+                >
+                  <Mail size={18} /> Send Email / Alerts
                 </button>
 
                 <button 

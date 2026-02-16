@@ -456,3 +456,6 @@
 /Users/bashisthapandey/Desktop/product/backend/obj/Debug/net9.0/product.pdb
 /Users/bashisthapandey/Desktop/product/backend/obj/Debug/net9.0/product.genruntimeconfig.cache
 /Users/bashisthapandey/Desktop/product/backend/obj/Debug/net9.0/ref/product.dll
+/Users/bashisthapandey/Desktop/product/backend/bin/Debug/net9.0/BouncyCastle.Cryptography.dll
+/Users/bashisthapandey/Desktop/product/backend/bin/Debug/net9.0/MailKit.dll
+/Users/bashisthapandey/Desktop/product/backend/bin/Debug/net9.0/MimeKit.dll
